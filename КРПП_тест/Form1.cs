@@ -83,3 +83,40 @@ namespace КРПП_тест
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            string number = txtNumber.Text.Trim();
+            string city = txtCity.Text.Trim();
+            string day = txtDay.Text.Trim();
+            string responsible = txtResponsible.Text.Trim();
+            string deputy = txtDeputy.Text.Trim();
+            string person1 = txtPerson1.Text.Trim();
+            string person2 = txtPerson2.Text.Trim();
+            string person3 = txtPerson3.Text.Trim();
+
+            if (string.IsNullOrEmpty(number) || string.IsNullOrEmpty(city) ||
+                string.IsNullOrEmpty(day) || string.IsNullOrEmpty(responsible))
+            {
+                MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string fileName = $"Приказ_№{number}_{DateTime.Now:yyyyMMdd_HHmmss}.docx";
+                string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
+
+                CreateOrderDocument(
+                    filePath, number, city, day,
+                    responsible, deputy,
+                    person1, person2, person3
+                );
+
+                MessageBox.Show($"Приказ успешно создан:\n{filePath}", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании документа:\n{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
