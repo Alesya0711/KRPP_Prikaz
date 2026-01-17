@@ -120,3 +120,42 @@ namespace КРПП_тест
                 MessageBox.Show($"Ошибка при создании документа:\n{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void CreateOrderDocument(
+            string filePath, string number, string city, string day,
+            string responsible, string deputy,
+            string person1, string person2, string person3)
+        {
+            using (WordprocessingDocument doc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+            {
+                MainDocumentPart mainPart = doc.AddMainDocumentPart();
+                mainPart.Document = new Document();
+                Body body = mainPart.Document.AppendChild(new Body());
+
+                body.AppendChild(new Paragraph());
+
+                var p1 = new Paragraph(
+                    new ParagraphProperties(new Justification() { Val = JustificationValues.Center }),
+                    new Run(new Text($"Приказ № {number}"))
+                );
+                body.AppendChild(p1);
+
+                var p2 = new Paragraph(
+                    new ParagraphProperties(new Justification() { Val = JustificationValues.Right }),
+                    new Run(new Text($"Г. {city}"))
+                );
+                body.AppendChild(p2);
+
+                var p3 = new Paragraph(
+                    new ParagraphProperties(new Justification() { Val = JustificationValues.Center }),
+                    new Run(new Text("О назначении ответственного за архив"))
+                );
+                body.AppendChild(p3);
+
+                var p4 = new Paragraph(
+                    new ParagraphProperties(new Justification() { Val = JustificationValues.Right }),
+                    new Run(new Text($"{day}г."))
+                );
+                body.AppendChild(p4);
+
+                body.AppendChild(new Paragraph());
