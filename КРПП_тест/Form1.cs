@@ -159,3 +159,34 @@ namespace КРПП_тест
                 body.AppendChild(p4);
 
                 body.AppendChild(new Paragraph());
+
+                AddParagraph(body, "В целях обеспечения качественного документооборота на предприятии, приказываю:");
+                body.AppendChild(new Paragraph());
+
+                AddParagraph(body, $"1. С {day} назначить ответственным за архив: {responsible}.");
+                AddParagraph(body, $"2. Назначить заместителем ответственного за архив: {deputy}.");
+                AddParagraph(body, $"3. {deputy} выполнять обязанности ответственного в отсутствие {responsible} на рабочем месте.");
+                AddParagraph(body, $"4. Ознакомить {responsible} и {deputy} с должностной инструкцией № {number} от {day}.");
+                AddParagraph(body, $"5. Контроль за исполнением возлагаю на {person1}.");
+
+                body.AppendChild(new Paragraph());
+
+                AddParagraph(body, $"Руководитель  {person1} (__________)");
+
+
+                AddParagraph(body, "С приказом ознакомлены:");
+                //body.AppendChild(new Paragraph());
+                AddParagraph(body, $"________________   {person1}   (___________)");
+                AddParagraph(body, $"________________   {person2}   (___________)");
+                AddParagraph(body, $"________________   {person3}   (___________)");
+            }
+        }
+
+        private void AddParagraph(Body body, string text)
+        {
+            body.AppendChild(new Paragraph(
+                new Run(new Text(text))
+            ));
+        }
+    }
+}
